@@ -2663,11 +2663,12 @@ var app = (function () {
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
     	child_ctx[2] = list[i].title;
-    	child_ctx[3] = list[i].body;
+    	child_ctx[3] = list[i].subTitle;
+    	child_ctx[4] = list[i].heading;
     	return child_ctx;
     }
 
-    // (57:2) {#each posts as { title, body }}
+    // (57:2) {#each getBlogPosts() as { title, subTitle, heading }}
     function create_each_block(ctx) {
     	let div2;
     	let div1;
@@ -2677,9 +2678,11 @@ var app = (function () {
     	let t0;
     	let t1;
     	let h6;
+    	let t2_value = /*subTitle*/ ctx[3] + "";
+    	let t2;
     	let t3;
     	let p;
-    	let t4_value = /*body*/ ctx[3] + "";
+    	let t4_value = /*heading*/ ctx[4] + "";
     	let t4;
     	let t5;
     	let mounted;
@@ -2694,23 +2697,23 @@ var app = (function () {
     			t0 = text(t0_value);
     			t1 = space();
     			h6 = element("h6");
-    			h6.textContent = "Card subtitle";
+    			t2 = text(t2_value);
     			t3 = space();
     			p = element("p");
     			t4 = text(t4_value);
     			t5 = space();
     			attr_dev(h5, "class", "card-title");
-    			add_location(h5, file$4, 60, 10, 1680);
+    			add_location(h5, file$4, 60, 10, 1702);
     			attr_dev(h6, "class", "card-subtitle mb-2 text-muted");
-    			add_location(h6, file$4, 61, 10, 1727);
+    			add_location(h6, file$4, 61, 10, 1749);
     			attr_dev(p, "class", "card-text");
-    			add_location(p, file$4, 62, 10, 1799);
+    			add_location(p, file$4, 62, 10, 1818);
     			attr_dev(div0, "class", "card-body");
-    			add_location(div0, file$4, 59, 8, 1645);
+    			add_location(div0, file$4, 59, 8, 1667);
     			attr_dev(div1, "class", "card card-hover svelte-1qvcxpx");
-    			add_location(div1, file$4, 58, 6, 1606);
+    			add_location(div1, file$4, 58, 6, 1628);
     			attr_dev(div2, "class", "col-8 mx-auto mb-4");
-    			add_location(div2, file$4, 57, 4, 1495);
+    			add_location(div2, file$4, 57, 4, 1517);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div2, anchor);
@@ -2720,13 +2723,14 @@ var app = (function () {
     			append_dev(h5, t0);
     			append_dev(div0, t1);
     			append_dev(div0, h6);
+    			append_dev(h6, t2);
     			append_dev(div0, t3);
     			append_dev(div0, p);
     			append_dev(p, t4);
     			append_dev(div2, t5);
 
     			if (!mounted) {
-    				dispose = listen_dev(div2, "click", /*click_handler*/ ctx[1], false, false, false);
+    				dispose = listen_dev(div2, "click", /*click_handler*/ ctx[0], false, false, false);
     				mounted = true;
     			}
     		},
@@ -2742,7 +2746,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(57:2) {#each posts as { title, body }}",
+    		source: "(57:2) {#each getBlogPosts() as { title, subTitle, heading }}",
     		ctx
     	});
 
@@ -2751,7 +2755,7 @@ var app = (function () {
 
     function create_fragment$7(ctx) {
     	let div;
-    	let each_value = /*posts*/ ctx[0];
+    	let each_value = getBlogPosts();
     	validate_each_argument(each_value);
     	let each_blocks = [];
 
@@ -2781,8 +2785,8 @@ var app = (function () {
     			}
     		},
     		p: function update(ctx, [dirty]) {
-    			if (dirty & /*alert, getBlogPosts, console, posts*/ 1) {
-    				each_value = /*posts*/ ctx[0];
+    			if (dirty & /*alert, getBlogPosts, console*/ 0) {
+    				each_value = getBlogPosts();
     				validate_each_argument(each_value);
     				let i;
 
@@ -2868,14 +2872,14 @@ var app = (function () {
     	$$self.$capture_state = () => ({ Blogpost, posts, getBlogPosts });
 
     	$$self.$inject_state = $$props => {
-    		if ("posts" in $$props) $$invalidate(0, posts = $$props.posts);
+    		if ("posts" in $$props) posts = $$props.posts;
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [posts, click_handler];
+    	return [click_handler];
     }
 
     class Blog extends SvelteComponentDev {
