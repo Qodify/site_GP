@@ -2760,7 +2760,7 @@ var app = (function () {
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[4] = list[i];
+    	child_ctx[3] = list[i];
     	return child_ctx;
     }
 
@@ -2770,24 +2770,20 @@ var app = (function () {
     	let div1;
     	let div0;
     	let h5;
-    	let t0_value = /*post*/ ctx[4].title + "";
+    	let t0_value = /*post*/ ctx[3].title + "";
     	let t0;
     	let t1;
     	let h6;
-    	let t2_value = new Date(/*post*/ ctx[4].timestamp).toLocaleDateString(undefined, /*options*/ ctx[2]) + "";
+    	let t2_value = new Date(/*post*/ ctx[3].timestamp).toLocaleDateString(undefined, /*options*/ ctx[1]) + "";
     	let t2;
     	let t3;
     	let p;
-    	let t4_value = /*post*/ ctx[4].heading + "";
+    	let t4_value = /*post*/ ctx[3].heading + "";
     	let t4;
     	let t5;
     	let div2_intro;
     	let mounted;
     	let dispose;
-
-    	function click_handler(...args) {
-    		return /*click_handler*/ ctx[3](/*post*/ ctx[4], ...args);
-    	}
 
     	const block = {
     		c: function create() {
@@ -2804,15 +2800,15 @@ var app = (function () {
     			t4 = text(t4_value);
     			t5 = space();
     			attr_dev(h5, "class", "card-title");
-    			add_location(h5, file$3, 33, 10, 894);
+    			add_location(h5, file$3, 33, 10, 896);
     			attr_dev(h6, "class", "card-subtitle mb-2 text-muted");
-    			add_location(h6, file$3, 34, 10, 946);
+    			add_location(h6, file$3, 34, 10, 948);
     			attr_dev(p, "class", "card-text");
-    			add_location(p, file$3, 37, 10, 1096);
+    			add_location(p, file$3, 37, 10, 1098);
     			attr_dev(div0, "class", "card-body");
-    			add_location(div0, file$3, 32, 8, 859);
+    			add_location(div0, file$3, 32, 8, 861);
     			attr_dev(div1, "class", "card card-hover svelte-1qvcxpx");
-    			add_location(div1, file$3, 31, 6, 820);
+    			add_location(div1, file$3, 31, 6, 822);
     			attr_dev(div2, "class", "col-12 mx-auto mb-4");
     			add_location(div2, file$3, 25, 4, 668);
     		},
@@ -2835,11 +2831,10 @@ var app = (function () {
     				mounted = true;
     			}
     		},
-    		p: function update(new_ctx, dirty) {
-    			ctx = new_ctx;
-    			if (dirty & /*posts*/ 1 && t0_value !== (t0_value = /*post*/ ctx[4].title + "")) set_data_dev(t0, t0_value);
-    			if (dirty & /*posts*/ 1 && t2_value !== (t2_value = new Date(/*post*/ ctx[4].timestamp).toLocaleDateString(undefined, /*options*/ ctx[2]) + "")) set_data_dev(t2, t2_value);
-    			if (dirty & /*posts*/ 1 && t4_value !== (t4_value = /*post*/ ctx[4].heading + "")) set_data_dev(t4, t4_value);
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*posts*/ 1 && t0_value !== (t0_value = /*post*/ ctx[3].title + "")) set_data_dev(t0, t0_value);
+    			if (dirty & /*posts*/ 1 && t2_value !== (t2_value = new Date(/*post*/ ctx[3].timestamp).toLocaleDateString(undefined, /*options*/ ctx[1]) + "")) set_data_dev(t2, t2_value);
+    			if (dirty & /*posts*/ 1 && t4_value !== (t4_value = /*post*/ ctx[3].heading + "")) set_data_dev(t4, t4_value);
     		},
     		i: function intro(local) {
     			if (!div2_intro) {
@@ -2900,7 +2895,7 @@ var app = (function () {
     			}
     		},
     		p: function update(ctx, [dirty]) {
-    			if (dirty & /*redirectTo, posts, Date, undefined, options*/ 7) {
+    			if (dirty & /*posts, Date, undefined, options*/ 3) {
     				each_value = /*posts*/ ctx[0];
     				validate_each_argument(each_value);
     				let i;
@@ -2951,6 +2946,10 @@ var app = (function () {
 
     const apiBaseUrl = "https://qs-api.azurewebsites.net/api";
 
+    const click_handler = () => {
+    	
+    }; //redirectTo(post);
+
     function instance$6($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots("Blog", slots, []);
@@ -2977,10 +2976,6 @@ var app = (function () {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn(`<Blog> was created with unknown prop '${key}'`);
     	});
 
-    	const click_handler = post => {
-    		redirectTo(post);
-    	};
-
     	$$self.$capture_state = () => ({
     		onMount,
     		navigate,
@@ -2999,7 +2994,7 @@ var app = (function () {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [posts, redirectTo, options, click_handler];
+    	return [posts, options];
     }
 
     class Blog extends SvelteComponentDev {
@@ -3206,8 +3201,6 @@ var app = (function () {
     	let route0;
     	let t1;
     	let route1;
-    	let t2;
-    	let route2;
     	let current;
     	navbar = new Navbar({ $$inline: true });
 
@@ -3221,11 +3214,6 @@ var app = (function () {
     			$$inline: true
     		});
 
-    	route2 = new Route({
-    			props: { path: "blog/:id", component: BlogPost },
-    			$$inline: true
-    		});
-
     	const block = {
     		c: function create() {
     			create_component(navbar.$$.fragment);
@@ -3233,8 +3221,6 @@ var app = (function () {
     			create_component(route0.$$.fragment);
     			t1 = space();
     			create_component(route1.$$.fragment);
-    			t2 = space();
-    			create_component(route2.$$.fragment);
     		},
     		m: function mount(target, anchor) {
     			mount_component(navbar, target, anchor);
@@ -3242,8 +3228,6 @@ var app = (function () {
     			mount_component(route0, target, anchor);
     			insert_dev(target, t1, anchor);
     			mount_component(route1, target, anchor);
-    			insert_dev(target, t2, anchor);
-    			mount_component(route2, target, anchor);
     			current = true;
     		},
     		p: noop,
@@ -3252,14 +3236,12 @@ var app = (function () {
     			transition_in(navbar.$$.fragment, local);
     			transition_in(route0.$$.fragment, local);
     			transition_in(route1.$$.fragment, local);
-    			transition_in(route2.$$.fragment, local);
     			current = true;
     		},
     		o: function outro(local) {
     			transition_out(navbar.$$.fragment, local);
     			transition_out(route0.$$.fragment, local);
     			transition_out(route1.$$.fragment, local);
-    			transition_out(route2.$$.fragment, local);
     			current = false;
     		},
     		d: function destroy(detaching) {
@@ -3268,8 +3250,6 @@ var app = (function () {
     			destroy_component(route0, detaching);
     			if (detaching) detach_dev(t1);
     			destroy_component(route1, detaching);
-    			if (detaching) detach_dev(t2);
-    			destroy_component(route2, detaching);
     		}
     	};
 
