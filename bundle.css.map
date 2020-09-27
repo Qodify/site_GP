@@ -1,0 +1,12 @@
+{
+  "version": 3,
+  "file": "bundle.css",
+  "sources": [
+    "Blog.svelte"
+  ],
+  "sourcesContent": [
+    "<script>\r\n  import { onMount } from \"svelte\";\r\n  import { navigate } from \"svelte-routing\";\r\n  import { fly } from \"svelte/transition\";\r\n  const apiBaseUrl = \"https://qs-api.azurewebsites.net/api\";\r\n  let posts = [];\r\n  onMount(async () => {\r\n    const res = await fetch(apiBaseUrl + \"/blogposts\");\r\n    posts = await res.json();\r\n  });\r\n\r\n  function redirectTo(post) {\r\n    navigate(`blog/${post.id}`, { replace: false });\r\n  }\r\n  const options = { year: \"numeric\", month: \"long\", day: \"numeric\" };\r\n</script>\r\n\r\n<style>\r\n  .card-hover:hover {\r\n    background-color: whitesmoke;\r\n  }\r\n</style>\r\n\r\n<div class=\"container-md mt-5 mx-auto\">\r\n  {#each posts as post}\r\n    <div\r\n      in:fly={{ y: 200, duration: 400 }}\r\n      class=\"col-12 mx-auto mb-4\"\r\n      on:click={() => {\r\n        redirectTo(post);\r\n      }}>\r\n      <div class=\"card card-hover\">\r\n        <div class=\"card-body\">\r\n          <h5 class=\"card-title\">{post.title}</h5>\r\n          <h6 class=\"card-subtitle mb-2 text-muted\">\r\n            {new Date(post.timestamp).toLocaleDateString(undefined, options)}\r\n          </h6>\r\n          <p class=\"card-text\">{post.heading}</p>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  {/each}\r\n</div>\r\n"
+  ],
+  "names": [],
+  "mappings": "AAkBE,0BAAW,MAAM,AAAC,CAAC,AACjB,gBAAgB,CAAE,UAAU,AAC9B,CAAC"
+}
